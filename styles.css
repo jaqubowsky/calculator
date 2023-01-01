@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
+/* MAIN */
+:root {
+  --main-white: #eee;
+  --main-black: #252525;
+  --main-grey: #aaa;
+}
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--main-black);
+}
+
+.border {
+  border: 2px var(--main-black) solid;
+  border-radius: 15px;
+}
+
+/* CALCULATOR */
+
+.calculator {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: var(--main-grey);
+  padding: 15px 20px;
+}
+
+/* DISPLAY SCREEN */
+
+.screen {
+  padding: 10px 20px;
+  background-color: var(--main-white);
+  text-align: right ;
+  word-wrap: break-word;
+}
+
+.screen-before {
+  min-height: 32px;
+  font-size: 20px;
+}
+
+.screen-current {
+  min-height: 60px;
+  font-size: 40px;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+/* BUTTONS */
+
+.btns {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn {
+  border: 2px solid var(--main-black);
+  padding: 20px;
+  font-size: 20px;
+  background-color: #eee;
+}
+
+.delete-btn {
+  background-color: #aaf;
+}
+
+.btns .delete-btn:hover {
+  background-color: #99e;
+}
+
+.btns .delete-btn:active {
+  background-color: #88d;
+}
+
+.clear-btn {
+  background-color: #faa;
+}
+
+.btns .clear-btn:hover {
+  background-color: #e99;
+}
+
+.btns .clear-btn:active {
+  background-color: #d88;
+}
+
+.btn:hover {
+  background-color: lightgrey;
+}
+
+.btn:active {
+  background-color: rgb(197, 196, 196);
+}
