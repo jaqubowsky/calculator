@@ -27,7 +27,10 @@ operatorButtons.forEach((button) => {
     }
     if (currentOperator !== "" && !shouldResetScreen) {
       operate();
-    } else if (firstNum === undefined && !shouldResetScreen) {
+    } else if (
+      (firstNum === undefined && !shouldResetScreen) ||
+      !currentOperator
+    ) {
       firstNum = parseFloat(currentOperation.textContent);
     }
 
