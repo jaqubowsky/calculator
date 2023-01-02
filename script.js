@@ -1,7 +1,7 @@
 let displayValue = "";
 let currentOperator = "";
-let firstNum;
-let secondNum;
+let firstNum = undefined;
+let secondNum = undefined;
 let shouldResetScreen = true;
 
 const numberButtons = document.querySelectorAll("[data-number]");
@@ -22,20 +22,21 @@ numberButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    if (displayValue === "" && typeof firstNumber === "undefined") {
+    if (currentOperation.textContent !== firstNum) {
+      firstNum = parseFloat(currentOperation.textContent);
+    }
+
+    if (firstNum === undefined && displayValue === "" && shouldResetScreen) {
       firstNum = 0;
     }
-    if (currentOperator !== "" && !shouldResetScreen) {
+    if (currentOperator && !shouldResetScreen) {
       operate();
-    } else if (
-      (firstNum === undefined && !shouldResetScreen) ||
-      !currentOperator
-    ) {
+    }
+    if (firstNum === undefined && !shouldResetScreen && !currentOperator) {
       firstNum = parseFloat(currentOperation.textContent);
     }
 
     shouldResetScreen = true;
-
     const operator = e.target;
     currentOperator = operator.textContent;
     previousOperation.textContent = `${firstNum} ${currentOperator}`;
@@ -112,6 +113,7 @@ function createPoint() {
     shouldResetScreen = false;
   }
   currentOperation.textContent += ".";
+  return;
 }
 
 function clearAll() {
