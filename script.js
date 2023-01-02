@@ -22,7 +22,7 @@ numberButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    if (displayValue === "" && isNaN(firstNum)) {
+    if (displayValue === "" && typeof firstNumber === "undefined") {
       firstNum = 0;
     }
     if (currentOperator !== "" && !shouldResetScreen) {
@@ -46,7 +46,6 @@ deleteButton.addEventListener("click", () => {
 equalButton.addEventListener("click", () => {
   if (!currentOperator) return;
   if (!displayValue && typeof firstNum === undefined) return;
-  secondNum = parseInt(currentOperation.textContent);
   operate(currentOperator, firstNum, secondNum);
   equalClear();
 });
@@ -70,10 +69,7 @@ function operate() {
     shouldResetScreen = true;
     secondNum = parseFloat(currentOperation.textContent);
     calculate(currentOperator, firstNum, secondNum);
-    previousOperation.textContent = `${firstNum} ${currentOperator} ${secondNum} =`;
   }
-
-  firstNum = parseFloat(currentOperation.textContent);
 }
 
 function add(firstNum, secondNum) {
@@ -128,6 +124,11 @@ function clearAll() {
 function calculate(operator, firstNumber, secondNumber) {
   switch (operator) {
     case "%":
+      if (secondNum === 0) {
+        alert("You can't divide by zero!");
+        clearAll();
+        return;
+      }
       currentOperation.innerHTML = divide(firstNumber, secondNumber);
       break;
     case "-":
@@ -142,4 +143,7 @@ function calculate(operator, firstNumber, secondNumber) {
     default:
       return;
   }
+
+  previousOperation.textContent = `${firstNum} ${currentOperator} ${secondNum} =`;
+  firstNum = parseFloat(currentOperation.textContent);
 }
