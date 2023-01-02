@@ -1,13 +1,15 @@
 let displayValue = "";
 let currentOperator = "";
-let firstNum = "";
-let secondNum = "";
-let shouldResetScreen = false;
+let firstNum = 0;
+let secondNum;
+let shouldResetScreen = true;
 
 const numberButtons = document.querySelectorAll("[data-number]");
 const operatorButtons = document.querySelectorAll("[data-operator]");
 const currentOperation = document.querySelector(".screen-current");
 const previousOperation = document.querySelector(".screen-before");
+const deleteButton = document.querySelector("[data-delete]");
+const clearButton = document.querySelector("[data-all-clear]");
 const equalButton = document.querySelector("[data-equal]");
 
 numberButtons.forEach((button) => {
@@ -19,9 +21,12 @@ numberButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
+    if (displayValue === "" && isNaN(firstNum)) {
+      firstNum = 0;
+    }
     if (currentOperator !== "" && !shouldResetScreen) {
       operate();
-    } else {
+    } else if (firstNum === 0 && !shouldResetScreen) {
       firstNum = parseFloat(currentOperation.textContent);
     }
 
@@ -33,17 +38,25 @@ operatorButtons.forEach((button) => {
   });
 });
 
+deleteButton.addEventListener("click", () => {
+  deleteNumber();
+});
+
 equalButton.addEventListener("click", () => {
+  if (!displayValue && typeof firstNum !== "number") return;
   secondNum = parseInt(currentOperation.textContent);
   operate(currentOperator, firstNum, secondNum);
   equalClear();
+});
+
+clearButton.addEventListener("click", () => {
+  clearAll();
 });
 
 // FUNCTIONS
 
 function equalClear() {
   currentOperator = "";
-  firstNum = "";
   secondNum = "";
   shouldResetScreen = true;
 }
@@ -81,6 +94,22 @@ function appendNumber(number) {
     shouldResetScreen = false;
   }
   displayValue = currentOperation.textContent += number;
+}
+
+function deleteNumber() {
+  currentOperation.textContent = currentOperation.textContent
+    .toString()
+    .slice(0, -1);
+}
+
+function clearAll() {
+  currentOperator = "";
+  firstNum = "";
+  secondNum = "";
+  displayValue = "";
+  currentOperation.textContent = displayValue;
+  previousOperation.textContent = displayValue;
+  shouldResetScreen = false;
 }
 
 function calculate(operator, firstNumber, secondNumber) {
