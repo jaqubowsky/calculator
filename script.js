@@ -21,22 +21,21 @@ operatorButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     if (currentOperator !== "" && !shouldResetScreen) {
       operate();
-      updateValueBefore(currentOperator);
     } else {
       firstNum = parseFloat(currentOperation.textContent);
-      updateValueBefore(currentOperator);
     }
+
+    shouldResetScreen = true;
 
     const operator = e.target;
     currentOperator = operator.textContent;
-    shouldResetScreen = true;
+    previousOperation.textContent = `${firstNum} ${currentOperator}`;
   });
 });
 
 equalButton.addEventListener("click", () => {
   secondNum = parseInt(currentOperation.textContent);
   operate(currentOperator, firstNum, secondNum);
-  updateValueBefore(currentOperator);
   equalClear();
 });
 
@@ -54,6 +53,7 @@ function operate() {
     shouldResetScreen = true;
     secondNum = parseFloat(currentOperation.textContent);
     calculate(currentOperator, firstNum, secondNum);
+    previousOperation.textContent = `${firstNum} ${currentOperator} ${secondNum} =`;
   }
 
   firstNum = parseFloat(currentOperation.textContent);
@@ -74,16 +74,6 @@ function multiply(firstNum, secondNum) {
 function divide(firstNum, secondNum) {
   return firstNum / secondNum;
 }
-
-// TODO: update before value
-
-// function updateValueBefore(currentOperation) {
-//   if (currentOperation) {
-//     previousOperation.textContent = `${firstNum} ${currentOperation}`;
-//   } else {
-//     previousOperation.textContent = `${firstNum} ${currentOperation} ${secondNum} =`;
-//   }
-// }
 
 function appendNumber(number) {
   if (displayValue === "0" || shouldResetScreen) {
