@@ -44,6 +44,7 @@ deleteButton.addEventListener("click", () => {
 });
 
 equalButton.addEventListener("click", () => {
+  if (!currentOperator) return;
   if (!displayValue && typeof firstNum === undefined) return;
   secondNum = parseInt(currentOperation.textContent);
   operate(currentOperator, firstNum, secondNum);
@@ -60,7 +61,7 @@ pointNumber.addEventListener("click", () => createPoint());
 
 function equalClear() {
   currentOperator = "";
-  secondNum = "";
+  secondNum = undefined;
   shouldResetScreen = true;
 }
 
